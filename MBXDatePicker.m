@@ -1,12 +1,12 @@
 //
-//  CDatePickerViewEx.m
+//  MBXDatePicker.m
 //  MonthYearDatePicker
 //
 //  Created by Igor on 18.03.13.
 //  Copyright (c) 2013 Igor. All rights reserved.
 //
 
-#import "CDatePickerViewEx.h"
+#import "MBXDatePicker.h"
 
 // Identifiers of components
 #define MONTH ( 0 )
@@ -17,7 +17,7 @@
 #define LABEL_TAG 43
 
 
-@interface CDatePickerViewEx()
+@interface MBXDatePicker()
 
 @property (nonatomic, strong) NSIndexPath *todayIndexPath;
 @property (nonatomic, strong) NSArray *months;
@@ -28,7 +28,7 @@
 
 @end
 
-@implementation CDatePickerViewEx
+@implementation MBXDatePicker
 
 const NSInteger bigRowCount = 1000;
 const NSInteger numberOfComponents = 2;
