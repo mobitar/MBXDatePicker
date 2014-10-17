@@ -35,38 +35,6 @@ const NSInteger numberOfComponents = 2;
 
 #pragma mark - Properties
 
--(void)setMonthFont:(UIFont *)monthFont
-{
-    if (monthFont)
-    {
-        _monthFont = monthFont;
-    }
-}
-
--(void)setMonthSelectedFont:(UIFont *)monthSelectedFont
-{
-    if (monthSelectedFont)
-    {
-        _monthSelectedFont = monthSelectedFont;
-    }
-}
-
--(void)setYearFont:(UIFont *)yearFont
-{
-    if (yearFont)
-    {
-        _yearFont = yearFont;
-    }
-}
-
--(void)setYearSelectedFont:(UIFont *)yearSelectedFont
-{
-    if (yearSelectedFont)
-    {
-        _yearSelectedFont = yearSelectedFont;
-    }
-}
-
 #pragma mark - Init
 
 -(instancetype)init
@@ -145,45 +113,9 @@ const NSInteger numberOfComponents = 2;
     return [self componentWidth];
 }
 
--(UIView *)pickerView: (UIPickerView *)pickerView viewForRow: (NSInteger)row forComponent: (NSInteger)component reusingView: (UIView *)view
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    BOOL selected = NO;
-    if(component == MONTH)
-    {
-        NSInteger monthCount = self.months.count;
-        NSString *monthName = [self.months objectAtIndex:(row % monthCount)];
-        NSString *currentMonthName = [self currentMonthName];
-        if([monthName isEqualToString:currentMonthName] == YES)
-        {
-            selected = YES;
-        }
-    }
-    else
-    {
-        NSInteger yearCount = self.years.count;
-        NSString *yearName = [self.years objectAtIndex:(row % yearCount)];
-        NSString *currenrYearName  = [self currentYearName];
-        if([yearName isEqualToString:currenrYearName] == YES)
-        {
-            selected = YES;
-        }
-    }
-    
-    UILabel *returnView = nil;
-    if(view.tag == LABEL_TAG)
-    {
-        returnView = (UILabel *)view;
-    }
-    else
-    {
-        returnView = [self labelForComponent:component];
-    }
-    
-    returnView.font = selected ? [self selectedFontForComponent:component] : [self fontForComponent:component];
-    returnView.textColor = selected ? [self selectedColorForComponent:component] : [self colorForComponent:component];
-    
-    returnView.text = [self titleForRow:row forComponent:component];
-    return returnView;
+    return [self titleForRow:row forComponent:component];
 }
 
 -(CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component
@@ -235,19 +167,6 @@ const NSInteger numberOfComponents = 2;
     return [self.years objectAtIndex:(row % yearCount)];
 }
 
--(UILabel *)labelForComponent:(NSInteger)component
-{
-    CGRect frame = CGRectMake(0, 0, [self componentWidth], self.rowHeight);
-    
-    UILabel *label = [[UILabel alloc] initWithFrame:frame];
-    label.textAlignment = UITextAlignmentCenter;
-    label.backgroundColor = [UIColor clearColor];
-    label.userInteractionEnabled = NO;
-    
-    label.tag = LABEL_TAG;
-    
-    return label;
-}
 
 -(NSArray *)nameOfMonths
 {
@@ -314,42 +233,6 @@ const NSInteger numberOfComponents = 2;
     return [formatter stringFromDate:[NSDate date]];
 }
 
-- (UIColor *)selectedColorForComponent:(NSInteger)component
-{
-    if (component == 0)
-    {
-        return self.monthSelectedTextColor;
-    }
-    return self.yearSelectedTextColor;
-}
-
-- (UIColor *)colorForComponent:(NSInteger)component
-{
-    if (component == 0)
-    {
-        return self.monthTextColor;
-    }
-    return self.yearTextColor;
-}
-
-- (UIFont *)selectedFontForComponent:(NSInteger)component
-{
-    if (component == 0)
-    {
-        return self.monthSelectedFont;
-    }
-    return self.yearSelectedFont;
-}
-
-- (UIFont *)fontForComponent:(NSInteger)component
-{
-    if (component == 0)
-    {
-        return self.monthFont;
-    }
-    return self.yearFont;
-}
-
 -(void)loadDefaultsParameters
 {
     self.minYear = 2008;
@@ -362,18 +245,6 @@ const NSInteger numberOfComponents = 2;
     
     self.delegate = self;
     self.dataSource = self;
-    
-    self.monthSelectedTextColor = [UIColor blueColor];
-    self.monthTextColor = [UIColor blackColor];
-    
-    self.yearSelectedTextColor = [UIColor blueColor];
-    self.yearTextColor = [UIColor blackColor];
-    
-    self.monthSelectedFont = [UIFont boldSystemFontOfSize:17];
-    self.monthFont = [UIFont boldSystemFontOfSize:17];
-    
-    self.yearSelectedFont = [UIFont boldSystemFontOfSize:17];
-    self.yearFont = [UIFont boldSystemFontOfSize:17];
 }
 
 @end
